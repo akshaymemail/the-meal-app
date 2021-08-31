@@ -1,32 +1,26 @@
 import React from "react"
-import { View, Text, StyleSheet, Button } from "react-native"
+import { View, Text, StyleSheet, FlatList } from "react-native"
+import { CATEGORIES } from "../../data/fake-data"
 
-export default function Categories({ navigation }) {
+const renderGridItem = (itemData) => {
   return (
-    <View style={styles.screen}>
-      <View>
-        <Text style={styles.heading}>Categories Screen</Text>
-      </View>
-      <View style={styles.action}>
-        <Button
-          title="Go to meals"
-          onPress={() => navigation.navigate("meals")}
-        />
-      </View>
+    <View style={styles.gridItem}>
+      <Text>{itemData.item.title}</Text>
     </View>
   )
 }
 
+export default function Categories({ navigation }) {
+  return (
+    <FlatList numColumns={2} data={CATEGORIES} renderItem={renderGridItem} />
+  )
+}
+
 const styles = StyleSheet.create({
-  screen: {
+  gridItem: {
     flex: 1,
-    justifyContent: "center",
+    margin: 20,
+    height: 200,
     alignItems: "center"
-  },
-  heading: {
-    fontSize: 30
-  },
-  action: {
-    marginVertical: 20
   }
 })
