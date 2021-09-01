@@ -1,16 +1,26 @@
 import React from "react"
-import { View, Text, StyleSheet, FlatList } from "react-native"
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity
+} from "react-native"
 import { CATEGORIES } from "../../data/fake-data"
 
-const renderGridItem = (itemData) => {
-  return (
-    <View style={styles.gridItem}>
-      <Text>{itemData.item.title}</Text>
-    </View>
-  )
-}
-
 export default function Categories({ navigation }) {
+  const renderGridItem = (itemData) => {
+    return (
+      <TouchableOpacity
+        style={styles.gridItem}
+        onPress={() => navigation.navigate("meals")}
+      >
+        <View>
+          <Text>{itemData.item.title}</Text>
+        </View>
+      </TouchableOpacity>
+    )
+  }
   return (
     <FlatList numColumns={2} data={CATEGORIES} renderItem={renderGridItem} />
   )
