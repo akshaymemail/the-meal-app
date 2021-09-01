@@ -23,7 +23,7 @@ export default function Navigator() {
         <Stack.Screen
           name="categories"
           options={{
-            title: "Categories!"
+            title: "Categories"
           }}
           component={Categories}
         />

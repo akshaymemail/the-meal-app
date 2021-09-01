@@ -4,27 +4,32 @@ import {
   Text,
   StyleSheet,
   FlatList,
-  TouchableOpacity
+  TouchableNativeFeedback
 } from "react-native"
-import { Colors } from "../../constants/Colors"
 import { CATEGORIES } from "../../data/fake-data"
 
 export default function Categories({ navigation }) {
   const renderGridItem = (itemData) => {
     return (
-      <TouchableOpacity
-        style={styles.gridItem}
-        onPress={() =>
-          navigation.navigate("meals", {
-            id: itemData.item.id,
-            title: itemData.item.title
-          })
-        }
-      >
-        <View>
-          <Text>{itemData.item.title}</Text>
-        </View>
-      </TouchableOpacity>
+      <View style={styles.gridItem}>
+        <TouchableNativeFeedback
+          onPress={() =>
+            navigation.navigate("meals", {
+              id: itemData.item.id,
+              title: itemData.item.title
+            })
+          }
+        >
+          <View
+            style={{
+              ...styles.container,
+              ...{ backgroundColor: itemData.item.color }
+            }}
+          >
+            <Text style={styles.title}>{itemData.item.title}</Text>
+          </View>
+        </TouchableNativeFeedback>
+      </View>
     )
   }
   return (
@@ -37,6 +42,28 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 20,
     height: 200,
-    alignItems: "center"
+    overflow: "hidden",
+    borderRadius: 15
+  },
+  container: {
+    flex: 1,
+    borderRadius: 15,
+    shadowColor: "black",
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 10,
+    elevation: 3,
+    padding: 15,
+    justifyContent: "flex-end",
+    alignItems: "flex-end"
+  },
+  title: {
+    fontFamily: "open-sans-bold",
+    color: "#f1f1f1",
+
+    paddingVertical: 2,
+    paddingHorizontal: 5,
+    borderRadius: 5,
+    fontSize: 18
   }
 })
