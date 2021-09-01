@@ -1,7 +1,8 @@
 import React from "react"
 import { View, Text, StyleSheet, Button } from "react-native"
 
-export default function Meals({ navigation }) {
+export default function Meals({ route, navigation }) {
+  //console.log(route.params)
   return (
     <View style={styles.screen}>
       <View>

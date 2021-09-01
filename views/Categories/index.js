@@ -6,6 +6,7 @@ import {
   FlatList,
   TouchableOpacity
 } from "react-native"
+import { Colors } from "../../constants/Colors"
 import { CATEGORIES } from "../../data/fake-data"
 
 export default function Categories({ navigation }) {
@@ -13,7 +14,12 @@ export default function Categories({ navigation }) {
     return (
       <TouchableOpacity
         style={styles.gridItem}
-        onPress={() => navigation.navigate("meals")}
+        onPress={() =>
+          navigation.navigate("meals", {
+            id: itemData.item.id,
+            title: itemData.item.title
+          })
+        }
       >
         <View>
           <Text>{itemData.item.title}</Text>
