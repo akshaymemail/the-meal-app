@@ -1,32 +1,52 @@
 import React from "react"
-import { View, Text, StyleSheet, Button } from "react-native"
+import { View, Text, StyleSheet, Button, ScrollView, Image } from "react-native"
 
-export default function MealDetails({ navigation }) {
+export default function MealDetails({ navigation, route }) {
+  const { item } = route.params
   return (
-    <View style={styles.screen}>
-      <View>
-        <Text style={styles.heading}>Meals Screen</Text>
+    <ScrollView>
+      <Image style={styles.image} source={{ uri: item.imageUrl }} />
+      <View style={styles.details}>
+        <Text>{item.duration}m</Text>
+        <Text>{item.complexity.toUpperCase()}</Text>
+        <Text>{item.affordability.toUpperCase()}</Text>
       </View>
-      <View style={styles.action}>
-        <Button title="Go Back" onPress={() => navigation.pop()} />
-      </View>
-      <View style={styles.action}>
-        <Button title="Back to home" onPress={() => navigation.popToTop()} />
-      </View>
-    </View>
+      <Text style={styles.title}> Ingredients </Text>
+      {item.ingredients.map((ingredient, index) => (
+        <Text key={index} style={styles.listItem}>
+          {ingredient}
+        </Text>
+      ))}
+      <Text style={styles.title}> Steps </Text>
+      {item.steps.map((step, index) => (
+        <Text key={index} style={styles.listItem}>
+          {step}
+        </Text>
+      ))}
+    </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
+  image: {
+    height: 200,
+    width: "100%"
   },
-  heading: {
-    fontSize: 30
+  details: {
+    flexDirection: "row",
+    padding: 15,
+    justifyContent: "space-between"
   },
-  action: {
-    marginVertical: 20
+  title: {
+    fontFamily: "open-sans-bold",
+    fontSize: 18,
+    textAlign: "center"
+  },
+  listItem: {
+    borderColor: "#ccc",
+    borderWidth: 1,
+    marginVertical: 10,
+    marginHorizontal: 20,
+    padding: 10
   }
 })

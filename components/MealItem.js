@@ -15,7 +15,8 @@ const MealItem = ({ item, navigation, route }) => {
         onPress={() =>
           navigation.navigate("meal-details", {
             color: route.params ? route.params.color : Colors.primaryColor,
-            title: item.title
+            title: item.title,
+            item: item
           })
         }
       >
