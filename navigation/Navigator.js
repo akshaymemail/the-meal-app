@@ -121,7 +121,6 @@ export default function Navigator() {
   // filter stack  navigation
   const FilterNavigation = () => (
     <Stack.Navigator
-      initialRouteName="home"
       screenOptions={{
         headerStyle: { backgroundColor: Colors.primaryColor },
         headerTintColor: Colors.secondaryColor,
@@ -152,14 +151,18 @@ export default function Navigator() {
     <Tab.Navigator
       screenOptions={{
         tabBarActiveBackgroundColor: "tomato",
-        tabBarActiveTintColor: "#f1f1f1"
+        tabBarActiveTintColor: "#f1f1f1",
+        tabBarLabelStyle: {
+          fontSize: 14
+        }
       }}
     >
       <Tab.Screen
-        name="home"
+        name="categoryNavigation"
         component={CategoriesNavigation}
         options={{
           headerShown: false,
+          title: "Categories",
           tabBarIcon: () => (
             <Ionicons
               name="ios-restaurant"
@@ -174,6 +177,7 @@ export default function Navigator() {
         component={FavoriteNavigation}
         options={{
           headerShown: false,
+          title: "Favorite",
           tabBarIcon: () => (
             <Ionicons
               name="ios-star"
@@ -192,14 +196,32 @@ export default function Navigator() {
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Home">
         <Drawer.Screen
-          name="Home"
+          name="home"
           component={TabNavigation}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            title: "Home",
+            drawerActiveBackgroundColor: Colors.primaryColor,
+            drawerActiveTintColor: Colors.secondaryColor,
+            drawerLabelStyle: {
+              fontFamily: "open-sans-bold",
+              fontSize: 20
+            }
+          }}
         />
         <Drawer.Screen
           name="filter"
           component={FilterNavigation}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            title: "Preferences",
+            drawerActiveBackgroundColor: Colors.primaryColor,
+            drawerActiveTintColor: Colors.secondaryColor,
+            drawerLabelStyle: {
+              fontFamily: "open-sans-bold",
+              fontSize: 20
+            }
+          }}
         />
       </Drawer.Navigator>
     </NavigationContainer>
