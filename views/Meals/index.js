@@ -1,20 +1,27 @@
 import React from "react"
-import { View, Text, StyleSheet, Button } from "react-native"
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  FlatList,
+  TouchableNativeFeedback
+} from "react-native"
+import MealItem from "../../components/MealItem"
+import { MEALS } from "../../data/fake-data"
 
 export default function Meals({ route, navigation }) {
-  //console.log(route.params)
+  const Meals = MEALS.filter(
+    (meal) => meal.categoryids.indexOf(route.params.id) >= 0
+  )
   return (
-    <View style={styles.screen}>
-      <View>
-        <Text style={styles.heading}>Meals Screen</Text>
-      </View>
-      <View style={styles.action}>
-        <Button
-          title="Go to meal details"
-          onPress={() => navigation.navigate("meal-details")}
-        />
-      </View>
-    </View>
+    <FlatList
+      numColumns={2}
+      data={Meals}
+      renderItem={({ item }) => (
+        <MealItem navigation={navigation} route={route} item={item} />
+      )}
+    />
   )
 }
 

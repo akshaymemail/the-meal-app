@@ -16,7 +16,8 @@ export default function Categories({ navigation }) {
           onPress={() =>
             navigation.navigate("meals", {
               id: itemData.item.id,
-              title: itemData.item.title
+              title: itemData.item.title,
+              color: itemData.item.color
             })
           }
         >
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: "open-sans-bold",
-    color: "#f1f1f1",
+    color: "#424242",
 
     paddingVertical: 2,
     paddingHorizontal: 5,

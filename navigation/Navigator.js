@@ -29,12 +29,18 @@ export default function Navigator() {
         />
         <Stack.Screen
           name="meals"
-          options={({ route }) => ({ title: route.params.title })}
+          options={({ route }) => ({
+            title: route.params.title,
+            headerStyle: { backgroundColor: route.params.color }
+          })}
           component={Meals}
         />
         <Stack.Screen
           name="meal-details"
-          options={{ title: "Meal Details" }}
+          options={({ route }) => ({
+            title: route.params.title,
+            headerStyle: { backgroundColor: route.params.color }
+          })}
           component={MealDetails}
         />
       </Stack.Navigator>

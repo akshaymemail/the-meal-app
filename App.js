@@ -15,15 +15,16 @@ const fetchFonts = () => {
 
 export default function App() {
   const [isFontLoaded, setIsFontLoaded] = useState(false)
-  return !isFontLoaded ? (
-    <AppLoading
-      startAsync={fetchFonts}
-      onFinish={() => setIsFontLoaded(true)}
-      onError={(e) => console.log(e)}
-    />
-  ) : (
-    <Navigator />
-  )
+  if (!isFontLoaded) {
+    return (
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => setIsFontLoaded(true)}
+        onError={(e) => console.log(e)}
+      />
+    )
+  }
+  return <Navigator />
 }
 
 const styles = StyleSheet.create({
