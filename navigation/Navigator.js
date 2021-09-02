@@ -9,10 +9,14 @@ import { TouchableNativeFeedback } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import Favorites from "../views/Favourites"
+import Filters from "../views/Filters"
+import { createDrawerNavigator } from "@react-navigation/drawer"
+import { AntDesign } from "@expo/vector-icons"
 
 export default function Navigator() {
   const Stack = createNativeStackNavigator()
   const Tab = createBottomTabNavigator()
+  const Drawer = createDrawerNavigator()
 
   //category stack navigation
   const CategoriesNavigation = () => (
@@ -28,9 +32,16 @@ export default function Navigator() {
     >
       <Stack.Screen
         name="categories"
-        options={{
-          title: "CATEGORIES"
-        }}
+        options={({ navigation }) => ({
+          title: "CATEGORIES",
+          headerLeft: () => (
+            <AntDesign
+              name="menuunfold"
+              onPress={() => navigation.openDrawer()}
+              style={{ fontSize: 30, color: "#f1f1f1", marginRight: 10 }}
+            />
+          )
+        })}
         component={Categories}
       />
       <Stack.Screen
@@ -75,7 +86,16 @@ export default function Navigator() {
     >
       <Stack.Screen
         name="favorites"
-        options={{ title: "MY FAVORITES" }}
+        options={({ navigation }) => ({
+          title: "MY FAVORITES",
+          headerLeft: () => (
+            <AntDesign
+              name="menuunfold"
+              onPress={() => navigation.openDrawer()}
+              style={{ fontSize: 30, color: "#f1f1f1", marginRight: 10 }}
+            />
+          )
+        })}
         component={Favorites}
       />
       <Stack.Screen
@@ -97,45 +117,91 @@ export default function Navigator() {
       />
     </Stack.Navigator>
   )
+
+  // filter stack  navigation
+  const FilterNavigation = () => (
+    <Stack.Navigator
+      initialRouteName="home"
+      screenOptions={{
+        headerStyle: { backgroundColor: Colors.primaryColor },
+        headerTintColor: Colors.secondaryColor,
+        headerTitleStyle: {
+          fontWeight: "bold"
+        }
+      }}
+    >
+      <Stack.Screen
+        name="filters"
+        options={({ navigation }) => ({
+          title: "Filters",
+          headerStyle: { backgroundColor: Colors.primaryColor },
+          headerLeft: () => (
+            <AntDesign
+              name="menuunfold"
+              onPress={() => navigation.openDrawer()}
+              style={{ fontSize: 30, color: "#f1f1f1", marginRight: 10 }}
+            />
+          )
+        })}
+        component={Filters}
+      />
+    </Stack.Navigator>
+  )
+
+  const TabNavigation = () => (
+    <Tab.Navigator
+      screenOptions={{
+        tabBarActiveBackgroundColor: "tomato",
+        tabBarActiveTintColor: "#f1f1f1"
+      }}
+    >
+      <Tab.Screen
+        name="home"
+        component={CategoriesNavigation}
+        options={{
+          headerShown: false,
+          tabBarIcon: () => (
+            <Ionicons
+              name="ios-restaurant"
+              onPress={() => {}}
+              style={{ fontSize: 25, color: "#f1f1f1" }}
+            />
+          )
+        }}
+      />
+      <Tab.Screen
+        name="favorite"
+        component={FavoriteNavigation}
+        options={{
+          headerShown: false,
+          tabBarIcon: () => (
+            <Ionicons
+              name="ios-star"
+              onPress={() => {}}
+              style={{ fontSize: 25, color: "#f1f1f1" }}
+            />
+          ),
+          headerStyle: { backgroundColor: Colors.primaryColor },
+          headerTintColor: Colors.secondaryColor
+        }}
+      />
+    </Tab.Navigator>
+  )
+
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={{
-          tabBarActiveBackgroundColor: "tomato",
-          tabBarActiveTintColor: "#f1f1f1"
-        }}
-      >
-        <Tab.Screen
-          name="home"
-          component={CategoriesNavigation}
-          options={{
-            headerShown: false,
-            tabBarIcon: () => (
-              <Ionicons
-                name="ios-restaurant"
-                onPress={() => {}}
-                style={{ fontSize: 25, color: "#f1f1f1" }}
-              />
-            )
-          }}
+      <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Screen
+          name="Home"
+          component={TabNavigation}
+          options={{ headerShown: false }}
         />
-        <Tab.Screen
-          name="favorite"
-          component={FavoriteNavigation}
-          options={{
-            headerShown: false,
-            tabBarIcon: () => (
-              <Ionicons
-                name="ios-star"
-                onPress={() => {}}
-                style={{ fontSize: 25, color: "#f1f1f1" }}
-              />
-            ),
-            headerStyle: { backgroundColor: Colors.primaryColor },
-            headerTintColor: Colors.secondaryColor
-          }}
+        <Drawer.Screen
+          name="filter"
+          component={FilterNavigation}
+          options={{ headerShown: false }}
         />
-      </Tab.Navigator>
+      </Drawer.Navigator>
     </NavigationContainer>
   )
 }

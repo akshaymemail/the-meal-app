@@ -9,7 +9,8 @@ export default function Favorites({ route, navigation }) {
       meal.id === "m1" ||
       meal.id === "m2" ||
       meal.id === "m3" ||
-      meal.id === "m4"
+      meal.id === "m4" ||
+      meal.id === "m5"
   )
 
   return (
