@@ -7,54 +7,135 @@ import MealDetails from "../views/MealDetails"
 import { Colors } from "../constants/Colors"
 import { TouchableNativeFeedback } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import Favorites from "../views/Favourites"
 
 export default function Navigator() {
   const Stack = createNativeStackNavigator()
+  const Tab = createBottomTabNavigator()
+
+  //category stack navigation
+  const CategoriesNavigation = () => (
+    <Stack.Navigator
+      initialRouteName="categories"
+      screenOptions={{
+        headerStyle: { backgroundColor: Colors.primaryColor },
+        headerTintColor: Colors.secondaryColor,
+        headerTitleStyle: {
+          fontWeight: "bold"
+        }
+      }}
+    >
+      <Stack.Screen
+        name="categories"
+        options={{
+          title: "CATEGORIES"
+        }}
+        component={Categories}
+      />
+      <Stack.Screen
+        name="meals"
+        options={({ route }) => ({
+          title: route.params.title,
+          headerStyle: { backgroundColor: route.params.color }
+        })}
+        component={Meals}
+      />
+      <Stack.Screen
+        name="meal-details"
+        options={({ route }) => ({
+          title: route.params.title,
+          headerStyle: { backgroundColor: route.params.color },
+          headerRight: () => (
+            <TouchableNativeFeedback>
+              <Ionicons
+                name="ios-star-outline"
+                onPress={() => {}}
+                style={{ fontSize: 25, color: "#f1f1f1" }}
+              />
+            </TouchableNativeFeedback>
+          )
+        })}
+        component={MealDetails}
+      />
+    </Stack.Navigator>
+  )
+
+  // favorite stack navigation
+  const FavoriteNavigation = () => (
+    <Stack.Navigator
+      initialRouteName="favorites"
+      screenOptions={{
+        headerStyle: { backgroundColor: Colors.primaryColor },
+        headerTintColor: Colors.secondaryColor,
+        headerTitleStyle: {
+          fontWeight: "bold"
+        }
+      }}
+    >
+      <Stack.Screen
+        name="favorites"
+        options={{ title: "MY FAVORITES" }}
+        component={Favorites}
+      />
+      <Stack.Screen
+        name="meal-details"
+        options={({ route }) => ({
+          title: route.params.title,
+          headerStyle: { backgroundColor: Colors.primaryColor },
+          headerRight: () => (
+            <TouchableNativeFeedback>
+              <Ionicons
+                name="ios-star-outline"
+                onPress={() => {}}
+                style={{ fontSize: 25, color: "#f1f1f1" }}
+              />
+            </TouchableNativeFeedback>
+          )
+        })}
+        component={MealDetails}
+      />
+    </Stack.Navigator>
+  )
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="categories"
+      <Tab.Navigator
         screenOptions={{
-          headerStyle: { backgroundColor: Colors.primaryColor },
-          headerTintColor: Colors.secondaryColor,
-          headerTitleStyle: {
-            fontWeight: "bold"
-          }
+          tabBarActiveBackgroundColor: "tomato",
+          tabBarActiveTintColor: "#f1f1f1"
         }}
       >
-        <Stack.Screen
-          name="categories"
+        <Tab.Screen
+          name="home"
+          component={CategoriesNavigation}
           options={{
-            title: "Categories"
-          }}
-          component={Categories}
-        />
-        <Stack.Screen
-          name="meals"
-          options={({ route }) => ({
-            title: route.params.title,
-            headerStyle: { backgroundColor: route.params.color }
-          })}
-          component={Meals}
-        />
-        <Stack.Screen
-          name="meal-details"
-          options={({ route }) => ({
-            title: route.params.title,
-            headerStyle: { backgroundColor: route.params.color },
-            headerRight: () => (
-              <TouchableNativeFeedback>
-                <Ionicons
-                  name="ios-star"
-                  onPress={() => {}}
-                  style={{ fontSize: 25, color: "#f1f1f1" }}
-                />
-              </TouchableNativeFeedback>
+            headerShown: false,
+            tabBarIcon: () => (
+              <Ionicons
+                name="ios-restaurant"
+                onPress={() => {}}
+                style={{ fontSize: 25, color: "#f1f1f1" }}
+              />
             )
-          })}
-          component={MealDetails}
+          }}
         />
-      </Stack.Navigator>
+        <Tab.Screen
+          name="favorite"
+          component={FavoriteNavigation}
+          options={{
+            headerShown: false,
+            tabBarIcon: () => (
+              <Ionicons
+                name="ios-star"
+                onPress={() => {}}
+                style={{ fontSize: 25, color: "#f1f1f1" }}
+              />
+            ),
+            headerStyle: { backgroundColor: Colors.primaryColor },
+            headerTintColor: Colors.secondaryColor
+          }}
+        />
+      </Tab.Navigator>
     </NavigationContainer>
   )
 }

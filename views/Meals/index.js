@@ -1,12 +1,5 @@
 import React from "react"
-import {
-  View,
-  Text,
-  StyleSheet,
-  Button,
-  FlatList,
-  TouchableNativeFeedback
-} from "react-native"
+import { StyleSheet, FlatList } from "react-native"
 import MealItem from "../../components/MealItem"
 import { MEALS } from "../../data/fake-data"
 

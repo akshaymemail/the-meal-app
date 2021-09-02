@@ -6,6 +6,7 @@ import {
   TouchableNativeFeedback,
   ImageBackground
 } from "react-native"
+import { Colors } from "../constants/Colors"
 
 const MealItem = ({ item, navigation, route }) => {
   return (
@@ -13,7 +14,7 @@ const MealItem = ({ item, navigation, route }) => {
       <TouchableNativeFeedback
         onPress={() =>
           navigation.navigate("meal-details", {
-            color: route.params.color,
+            color: route.params ? route.params.color : Colors.primaryColor,
             title: item.title
           })
         }
